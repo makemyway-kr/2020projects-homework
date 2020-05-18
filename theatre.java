@@ -17,11 +17,11 @@ class module
 	{
 		int snumber;
 		String name;
-		System.out.println("ÁÂ¼®±¸ºÐ S(1), A(2), B(3)>> ");
+		System.out.println("ì¢Œì„êµ¬ë¶„ S(1), A(2), B(3)>> ");
 		int select1=s.nextInt();
-		if(select1>3)//¿¹¿ÜÃ³¸®
+		if(select1>3)//ì˜ˆì™¸ì²˜ë¦¬
 		{
-			System.out.print("Àß¸øÀÔ·ÂÇÏ¼Ì½À´Ï´Ù");
+			System.out.print("ìž˜ëª»ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤");
 			select1=s.nextInt();
 		}
 		else
@@ -30,13 +30,13 @@ class module
 			{
 			case 1:
 				System.out.println(Arrays.toString(seats.S));
-				System.out.print("ÀÌ¸§>>");
+				System.out.print("ì´ë¦„>>");
 				name=s.next();
-				System.out.print("¹øÈ£>>");
+				System.out.print("ë²ˆí˜¸>>");
 				snumber=s.nextInt();
-				if(snumber>10)//¿¹¿ÜÃ³¸®
+				if(snumber>10)//ì˜ˆì™¸ì²˜ë¦¬
 				{
-					System.out.println("¾ø´Â ÁÂ¼® ¹øÈ£ÀÔ´Ï´Ù.");
+					System.out.println("ì—†ëŠ” ì¢Œì„ ë²ˆí˜¸ìž…ë‹ˆë‹¤.");
 					
 				}
 				else 
@@ -48,7 +48,7 @@ class module
 					}
 					else 
 						{
-						     System.out.println("ÀÌ¹Ì ¿¹¾àµÈ ÁÂ¼®ÀÔ´Ï´Ù.");
+						     System.out.println("ì´ë¯¸ ì˜ˆì•½ëœ ì¢Œì„ìž…ë‹ˆë‹¤.");
 						     break;
 						}
 					
@@ -56,13 +56,13 @@ class module
 				
 			case 2:
 				System.out.println(Arrays.toString(seats.A));
-				System.out.print("ÀÌ¸§>>");
+				System.out.print("ì´ë¦„>>");
 				name=s.next();
-				System.out.print("¹øÈ£>>");
+				System.out.print("ë²ˆí˜¸>>");
 			    snumber=s.nextInt();
-			    if(snumber>10) //¿¹¿ÜÃ³¸®
+			    if(snumber>10) //ì˜ˆì™¸ì²˜ë¦¬
 				{
-					System.out.println("¾ø´Â ÁÂ¼® ¹øÈ£ÀÔ´Ï´Ù.");
+					System.out.println("ì—†ëŠ” ì¢Œì„ ë²ˆí˜¸ìž…ë‹ˆë‹¤.");
 					
 				}
 			    else 
@@ -74,7 +74,7 @@ class module
 					}
 					else 
 						{
-						     System.out.println("ÀÌ¹Ì ¿¹¾àµÈ ÁÂ¼®ÀÔ´Ï´Ù.");
+						     System.out.println("ì´ë¯¸ ì˜ˆì•½ëœ ì¢Œì„ìž…ë‹ˆë‹¤.");
 						     break;
 						}
 					
@@ -82,14 +82,14 @@ class module
 				
 			case 3:
 				System.out.println(Arrays.toString(seats.B));
-				System.out.print("ÀÌ¸§>>");
+				System.out.print("ì´ë¦„>>");
 				name=s.next();
-				System.out.print("¹øÈ£>>");
+				System.out.print("ë²ˆí˜¸>>");
 			    snumber=s.nextInt();
 			 
-			    if(snumber>10) //¿¹¿ÜÃ³¸®
+			    if(snumber>10) //ì˜ˆì™¸ì²˜ë¦¬
 				{
-					System.out.println("¾ø´Â ÁÂ¼® ¹øÈ£ÀÔ´Ï´Ù.");
+					System.out.println("ì—†ëŠ” ì¢Œì„ ë²ˆí˜¸ìž…ë‹ˆë‹¤.");
 					
 				}
 			    else 
@@ -101,7 +101,7 @@ class module
 					}
 					else 
 						{
-						     System.out.println("ÀÌ¹Ì ¿¹¾àµÈ ÁÂ¼®ÀÔ´Ï´Ù.");
+						     System.out.println("ì´ë¯¸ ì˜ˆì•½ëœ ì¢Œì„ìž…ë‹ˆë‹¤.");
 						     break;
 						}
 					
@@ -116,17 +116,17 @@ class module
 		System.out.println("S>>"+Arrays.toString(seats.S));
 		System.out.println("A>>"+Arrays.toString(seats.A));
 		System.out.println("B>>"+Arrays.toString(seats.B));
-		System.out.println("<<<<<Á¶È¸¸¦ ¿Ï·áÇÏ¿´½À´Ï´Ù>>>>>");
+		System.out.println("<<<<<ì¡°íšŒë¥¼ ì™„ë£Œí•˜ì˜€ìŠµë‹ˆë‹¤>>>>>");
 	}
 	public void cancel()
 	{
 		String name;
-		int count=0;//¿¹¿ÜÃ³¸®¿ë
-		System.out.println("ÁÂ¼®: S(1), A(2), B(3)>> ");
+		int count=0;//ì˜ˆì™¸ì²˜ë¦¬ìš©
+		System.out.println("ì¢Œì„: S(1), A(2), B(3)>> ");
 		int select1=s.nextInt();
 		if(select1>3)
 		{
-			System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+			System.out.println("ìž˜ëª» ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 			select1=s.nextInt();
 			
 		}
@@ -136,7 +136,7 @@ class module
 			{
 			case 1:
 				System.out.println(Arrays.toString(seats.S));
-				System.out.print("ÀÌ¸§>>");
+				System.out.print("ì´ë¦„>>");
 				name=s.next();
 				
 				for(int i=0;i<10;i++)
@@ -150,13 +150,13 @@ class module
 				}
 				if(count==0)
 				{
-					System.out.println("Ã£À¸½Ã´Â ÀÌ¸§ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+					System.out.println("ì°¾ìœ¼ì‹œëŠ” ì´ë¦„ì´ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				}
 				break;
 			case 2:
 				
 				System.out.println(Arrays.toString(seats.A));
-				System.out.print("ÀÌ¸§>>");
+				System.out.print("ì´ë¦„>>");
 				name=s.next();
 				for(int i=0;i<10;i++)
 				{
@@ -169,12 +169,12 @@ class module
 				}
 				if(count==0)
 				{
-					System.out.println("Ã£À¸½Ã´Â ÀÌ¸§ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+					System.out.println("ì°¾ìœ¼ì‹œëŠ” ì´ë¦„ì´ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				}
 				break;
 			case 3:
 				System.out.println(Arrays.toString(seats.B));
-				System.out.print("ÀÌ¸§>>");
+				System.out.print("ì´ë¦„>>");
 				name=s.next();
 				for(int i=0;i<10;i++)
 				{
@@ -187,7 +187,7 @@ class module
 				}
 				if(count==0)
 				{
-					System.out.println("Ã£À¸½Ã´Â ÀÌ¸§ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+					System.out.println("ì°¾ìœ¼ì‹œëŠ” ì´ë¦„ì´ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				}
 				break;
 			}
@@ -204,13 +204,13 @@ class bookingSystem
 	module m=new module();
 	bookingSystem()
 	{
-	    System.out.println("¸íÇ°ÄÜ¼­Æ®È¦ ¿¹¾à½Ã½ºÅÛÀÔ´Ï´Ù.");
+	    System.out.println("ëª…í’ˆì½˜ì„œíŠ¸í™€ ì˜ˆì•½ì‹œìŠ¤í…œìž…ë‹ˆë‹¤.");
 	}
 	public void main_System()
 	{
 		while(true)
 		{
-			System.out.print("1.¿¹¾à 2.Á¶È¸ 3.Ãë¼Ò 4.³¡³»±â>>");
+			System.out.print("1.ì˜ˆì•½ 2.ì¡°íšŒ 3.ì·¨ì†Œ 4.ëë‚´ê¸°>>");
 			int select=sc.nextInt();
 			if(select==1)
 			{
@@ -228,7 +228,7 @@ class bookingSystem
 			{
 				break;
 			}
-			else System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");//¾ø´Â¸Þ´º ¿¹¿ÜÃ³¸®
+			else System.out.println("ìž˜ëª» ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");//ì—†ëŠ”ë©”ë‰´ ì˜ˆì™¸ì²˜ë¦¬
 		}
 			
 	}
