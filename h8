@@ -1,0 +1,69 @@
+2.Floyd Algorithm을 이용한 소스코드
+
+#include<stdio.h>
+#define INF 999// 무한대값 정의
+void Floyd_Algo(int G[][8], int D[][8], int n, int P[][8])//플로이드 알고리즘
+{
+	int i, j, k;
+	for (i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			D[i][j] = G[i][j];
+			P[i][j] = 0;
+		}
+	}
+	for (k = 1; k <= n; k++)
+	{
+		for (i = 1; i <= n; i++)
+		{
+			for (j = 1; j <= n; j++)
+			{
+				if (D[i][k] + D[k][j] < D[i][j])//D(k-1)보다 D(k-1)ik+D(k-1)kj가 작으면
+				{
+					P[i][j] = k;
+					D[i][j] = D[i][k] + D[k][j];//D(k)는 D(ik)+D(kj)
+				}
+			}
+		}
+	}
+	
+}
+int main(void)
+{
+	int Graph[8][8] = { {0,0,0,0,0,0,0,0}, {0,0,4,INF,INF,INF,10,INF},{0,3,0,INF,18,INF,INF,INF},
+		{0,INF,6,0,INF,INF,INF,INF},{0,INF,5,15,0,2,19,5},{0,INF,INF,12,1,0,INF,INF},
+		{0,INF,INF,INF,INF,INF,0,10},{0,INF,INF,INF,8,INF,INF,0} };//주어진 그래프의 인접행렬
+
+       int inverse_Graph[8][8] = { {0,0,0,0,0,0,0,0} ,{0,0,INF,INF,8,INF,INF,INF},{0,10,0,INF,INF,INF,INF,INF},//a1~7의 인접행렬
+		{0,INF,INF,0,1,12,INF,INF},{0,5,19,2,0,15,5,INF}, {0,INF,INF,INF,INF,0,6,INF},{0,INF,INF,INF,18,INF,0,3},
+		{0,INF,10,INF,INF,INF,4,0} };
+        int D[8][8];//경로계산 결과를 담을 인접행렬
+	int P[8][8];//Floyd Algorithm에서 경로를 저장할 배열
+        Floyd_Algo(Graph, D, 7, P);
+        //Floyd_Algo(inverse_Graph, D, 7,P);
+	printf("모든 쌍 최단경로(행렬 D) 출력\n");
+	printf("\n     1   2   3   4   5   6   7 \n");
+	printf("--------------------------------\n");
+	for (int i = 1; i <= 7;i++)
+	{
+		printf("%d |  ", i);
+		for(int j=1;j<=7;j++)
+		{
+			if (D[i][j] < 10)
+			{
+				printf("%d   ", D[i][j]);
+
+			}
+			else if (D[i][j] < 100)
+			{
+				printf("%d  ",D[i][j]);
+			}
+
+		}
+		printf("\n");
+	}
+	printf("V3에서 V6로 가는 최단거리 경로상의 가장 큰 정점:V %d", P[3][6]);
+        //printf("a5에서 a2로 가는 최단거리 경로상의 인덱스 번호가 가장 큰 정점:a %d", P[5][2]);
+}
+	
