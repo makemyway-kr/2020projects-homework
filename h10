@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+int m, mprod, t, numnodes;
+numnodes = 1;//monte-carlo algorithm에서 구하고자하는 노드의 수
+m = 1;//유망한 자식노드의 수
+mprod = 1;//m의 곱
+t = 2;//자식 노드의 수
+int W = 52;	int w[6] = { 2,10,13,17,22,42 };
+int include[6] = { 0, };//최종 구하는 집합을 저장하기 위한 전역변수
+int count = 1;//검사하는 노드의 순서를 출력하기 위한 전역변수
+bool promise(int k, int weight, int total)//유망 여부를 조사	
+{
+	if (weight + total >= W && (weight == W || weight + w[k + 1] <= W))//유망하려면 남아있는 w값을 모두 더했을때 찾으려는 값 보다 크거나 같아야 하며, W값과 같거나 w[k+1]의 값을 더했을때 W값보다 작거나 같아야 한다.
+	{
+		return true;
+	}
+	else return false;
+}
+void sum(int k, int weight, int total)//재귀적으로 합을 구해나가며 집합을 구하는 함수
+{
+	
+	if (promise(k, weight, total))//현재 노드가 유망하다면 
+	{
+		printf("%d번째 검사중인 노드의 weight: %d , 유망함\n", count, weight);
+		count += 1;
+		if (weight == W)
+		{
+			printf("=========\n답의 집합 구해짐! 집합 출력:");
+			printf("{ ");
+			for (int i = 0; i < 6; i++)
+			{
+				if (include[i] != 0)
+				{
+					printf("%d ", include[i]);
+				}
+			}
+			printf(" }\n==========\n");
+		}
+		else
+		{
+			
+			
+			include[k + 1] = w[k + 1];//다음 숫자를 더할경우
+			sum(k + 1, weight + w[k + 1], total - w[k+1]);
+			include[k + 1] = 0;//다음 숫자를 더하지 않을 경우
+			sum(k + 1, weight, total - w[k + 1]);
+		}
+	}
+	else
+	{
+		printf("%d번째 검사중인 노드의 weight: %d, 유망하지않음\n", count, weight);
+		count += 1;
+	}
+
+}
+void monte_carlo(int k, int weight, int total)//몬테 카를로 알고리즘
+{
+	int choice = (rand() % 1) + 0;//0과 1중에 랜덤으로 선택하게 하여 w값을 더할지 안더할지를 정하게 하여 몬테카를로 알고리즘을 이용함.
+	while(m!=0)
+	{
+		if (promise(k + 1, weight + w[k + 1], total - w[k + 1])==1 && promise(k + 1, weight, total - w[k + 1])==1)//유망한 자식노드가 2개있을 경우
+		{
+			m = 2;
+			mprod = mprod * m;
+			numnodes = numnodes + mprod * t;
+		}
+		else if ((promise(k + 1, weight + w[k + 1], total - w[k + 1]) == 0 && promise(k + 1, weight, total - w[k + 1]) == 1) || promise(k + 1, weight + w[k + 1], total - w[k + 1]) == 1 && promise(k + 1, weight, total - w[k + 1]) == 0)
+		{
+			m = 1;//둘중의 하나가 유망한 노드이면 1을 m에 입력
+		}
+		else
+		{
+			m = 0;//유망한 노드가 없으면 0을 m에 입력
+		}
+		if (choice == 0)//0이면 w값을 더하지 않고 진행
+		{
+			monte_carlo(k + 1, weight, total - w[k + 1]);
+		}
+		else if (choice == 1)//1이면 w값을 더하고 진행시킴.
+		{
+			monte_carlo(k + 1, weight, total - w[k + 1]);
+		}
+	}
+	
+}
+
+
+void main()
+{
+	int num;
+	int total = 0;
+	for (int i = 0; i < 6; i++)
+	{
+		total += w[i];
+	}
+	sum(-1, 0, total);//루트부터 시작하기에 -1로 인덱스번호를 입력
+	monte_carlo(-1, 0, total);
+	printf("몬테 카를로 알고리즘을 이용한 추정치:%d", numnodes);
+}
