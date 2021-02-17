@@ -1,0 +1,169 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+int maxprofit = 0;
+int W = 9;
+int p[5] = { 20,30,35,12,3 };
+int w[5] = { 2,5,7,3,1 };
+bool bestset[5] = { false,false,false,false,false };
+struct node* sack[64 - 1];//최대 63개의 노드
+int count = 2;
+int queue[32];//큐
+struct node
+{
+    int level;
+    int profit;
+    int weight;
+    bool include[5];//물건의 포함 여부를 노드마다 표시하기 위한 boolean배열,부모노드에게서 이어받은 뒤 추가해나감.
+};
+int bound(struct node* n)
+{
+    int j, k;
+    int totweight;
+    float result;
+    if (n->weight > W)
+    {
+        return 0;
+    }
+    else
+    {
+        result = n->profit;
+        j = n->level + 1;
+        totweight = n->weight;
+        while ((j <= 4) && (totweight + w[j] <= W))
+        {
+            totweight = totweight + w[j];
+            result = result + p[j];
+            j++;
+        }
+        k = j;
+        if (k <= 4)
+        {
+            float temp = W - totweight;
+            temp = temp / w[k];
+            result = result + (temp * p[k]);
+            return result;
+
+        }
+        else
+        {
+            result = 0;
+            return result;
+        }
+    }
+
+}
+void knapsack(struct node* n)
+{
+    for (int i = 1; i < 32; i++)
+    {
+        queue[i] = 0;
+    }
+    int count_of_queue = 1;//큐 안의 노드 개수
+    int br = 1;//while문에 사용. 큐안에 노드가 존재하는지 여부판단.
+    while (br == 1)
+    {
+        int v = queue[0];
+        queue[0] = 0;//dequeue
+        count_of_queue -= 1;
+        int t = 0;
+        while (queue[0] == 0 && t < 32)//큐 당기기,최대 큐의 길이만큼 진행
+        {
+            for (int i = 0; i < 31; i++)
+            {
+                queue[i] = queue[i + 1];
+            }
+            t++;
+        }
+        if (bound(sack[v]) > maxprofit)
+        {
+            int stlev = sack[v]->level;
+            sack[count] = malloc(sizeof(struct node));
+            for (int i = 0; i < 5; i++)//이전 부모 노드의 include결과를 이어받음.
+            {
+                sack[count]->include[i] = false;
+                if (sack[v]->include[i] == true)
+                {
+                    sack[count]->include[i] = true;
+                }
+            }
+
+            sack[count]->level = stlev + 1;
+            sack[count]->include[stlev + 1] = true;//물건포함하는 자식
+            sack[count]->profit = sack[v]->profit + p[stlev + 1];
+            sack[count]->weight = sack[v]->weight + w[stlev + 1];
+            if (bound(sack[count]) == 0 && count != 1)printf("%d번째 탐색 노드-> 레벨:%d , profit:%d , weight:%d  / 유망하지않음 \n", count, sack[count]->level + 1, sack[count]->profit, sack[count]->weight);
+            else printf("%d번째 탐색 노드-> 레벨:%d , profit:%d , weight:%d , bound:%d \n", count, sack[count]->level + 1, sack[count]->profit, sack[count]->weight, bound(sack[count]));
+            if ((sack[count]->weight <= W) && (sack[count]->profit > maxprofit))
+            {
+                maxprofit = sack[count]->profit;
+                for (int i = 0; i < 5; i++)
+                {
+                    bestset[i] = false;
+                    if (sack[count]->include[i] == true)
+                    {
+                        bestset[i] = true;
+                    }
+                }
+            }
+            if (bound(sack[count]) > maxprofit)
+            {
+                queue[count_of_queue] = count;
+                count_of_queue += 1;
+            }
+            count += 1;
+            sack[count] = malloc(sizeof(struct node));
+            for (int i = 0; i < 5; i++)//이전 부모 노드의 include결과를 이어받음.
+            {
+                sack[count]->include[i] = false;
+                if (sack[v]->include[i] == true)
+                {
+                    sack[count]->include[i] = true;
+                }
+            }
+
+            sack[count]->level = stlev + 1;
+            sack[count]->include[stlev + 1] = false;//물건 미포함하는 자식
+            sack[count]->level = stlev + 1;
+            sack[count]->profit = sack[v]->profit;
+            sack[count]->weight = sack[v]->weight;
+            if (bound(sack[count]) == 0 && count != 1)printf("%d번째 탐색 노드-> 레벨:%d , profit:%d , weight:%d  / 유망하지않음 \n", count, sack[count]->level + 1, sack[count]->profit, sack[count]->weight);
+            else printf("%d번째 탐색 노드-> 레벨:%d , profit:%d , weight:%d , bound:%d \n", count, sack[count]->level + 1, sack[count]->profit, sack[count]->weight, bound(sack[count]));
+            if (bound(sack[count]) > maxprofit)
+            {
+                queue[count_of_queue] = count;
+                count_of_queue += 1;
+            }
+            count += 1;
+        }
+        if (count_of_queue == 0)
+        {
+            br = 0;
+        }
+    }
+
+}
+int main(void)
+{
+    sack[1] = malloc(sizeof(struct node));
+    sack[1]->weight = 0;
+    sack[1]->profit = 0;
+    sack[1]->level = -1;
+    for (int i = 0; i < 5; i++)
+    {
+        sack[1]->include[i] = false;
+    }
+    queue[0] = 1;
+    printf("1번째 탐색노드: level:0 , profit: 0  , weight:0 , bound: %d\n",bound(sack[1]));
+    knapsack(sack[1]);
+    for (int i = 0; i < 5; i++)
+    {
+        if (bestset[i] == true)
+        {
+            printf("%d번 물건 , ", i + 1);
+        }
+    }
+    printf("\n끝.");
+
+}
